@@ -1,0 +1,21 @@
+{
+  "name": "vite-plugin-whitebox",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almero-digital-marketing/vite-plugin-whitebox.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/almero-digital-marketing/vite-plugin-whitebox/issues"
+  },
+  "homepage": "https://github.com/almero-digital-marketing/vite-plugin-whitebox#readme",
+  "dependencies": {
+    "node-machine-id": "^1.1.12"
+  }
+}
