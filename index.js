@@ -10,7 +10,7 @@ const mikserPlugin = ({ version, domain, context, recaptcha }) => {
                 APP_VERSION: JSON.stringify(version),
                 WHITEBOX_DOMAIN: JSON.stringify(domain),
                 WHITEBOX_CONTEXT: JSON.stringify(context || MID.machineIdSync() + '_' + os.hostname() + '_' + os.userInfo().username),
-                WHITEBOX_NO_RECAPTCHA: JSON.stringify(command == 'serve' ? recaptcha : JSON.stringify('')),
+                WHITEBOX_NO_RECAPTCHA: JSON.stringify(command == 'serve' ? recaptcha : ''),
             })
         },
         configureServer(server) {
