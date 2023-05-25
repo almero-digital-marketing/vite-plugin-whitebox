@@ -1,11 +1,12 @@
 import MID from 'node-machine-id'
 import os from 'os'
 import path from 'path'
+import { writeFileSync, mkdirSync } from 'node:fs'
 
-const mikserPlugin = ({ version, domain, context, recaptcha, vendor = {} }) => {
+const mikserPlugin = ({ version, domain, context, recaptcha, vendor = {}, runtimeFolder }) => {
     return {
         name: 'mikser',
-        config(config, { command }) {
+        config(config, { command }) {            
             config.define ||= {}
             Object.assign(config.define, {
                 APP_VERSION: JSON.stringify(version),
@@ -27,17 +28,23 @@ const mikserPlugin = ({ version, domain, context, recaptcha, vendor = {} }) => {
                         if (moduleName.includes('whitebox')) {
                             return 'vendor-whitebox';
                         } else if (moduleName.includes('vue')) {
-                            return 'vendor-vue';
+                            return 'vendor-vue'
                         }
-                        return 'vendor';
+                        return 'vendor'
                     }
                 }
             })
         },
         configureServer(server) {
+            mkdirSync(runtimeFolder, { recursive: true })
+            const whiteboxConfig = {}
             server.httpServer?.once('listening', () => {
                 setTimeout(() => {
-                    console.log('  🌐 Public: ',`https://${server.config.server.port}-${os.hostname().split('.')[0]}.dev.whitebox.pro/\n`);
+                    const whiteboxOutput = path.join(runtimeFolder, `whitebox-details.json`)
+                    whiteboxConfig.publicUrl = `https://${server.config.server.port}-${os.hostname().split('.')[0]}.dev.whitebox.pro`
+                    console.log(`  🌐 Public: ${whiteboxConfig.publicUrl}/\n`)
+
+                    writeFileSync(whiteboxOutput, JSON.stringify(whiteboxConfig))
                 }, 100)
             })
         }
