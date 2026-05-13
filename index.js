@@ -41,9 +41,6 @@ const mikserPlugin = ({ version, domain, context, recaptcha, vendor = {}, runtim
             server.httpServer?.once('listening', () => {
                 setTimeout(() => {
                     const whiteboxOutput = path.join(runtimeFolder, `whitebox-details.json`)
-                    whiteboxConfig.publicUrl = `https://${server.config.server.port}-${os.hostname().split('.')[0]}.dev.whitebox.pro`
-                    console.log(`  🌐 Public: ${whiteboxConfig.publicUrl}/\n`)
-
                     writeFileSync(whiteboxOutput, JSON.stringify(whiteboxConfig))
                 }, 100)
             })
